@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" type="text/css" href="styles/base.css">
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+    <script type="text/javascript" src="js/Stairs.js"></script>
+</head>
+    <body onload="onLoad()">
+        <canvas id="canvas" width="600px" height="500px"></canvas>
+        <span class='title'>X: </span><span class='value' id='mouseX'></span>
+        <span class='title'>Y: </span><span class='value' id='mouseY'></span>        
+        <script>
+            function onLoad(){
+                regularStairsConfig = {
+                    type: 'regular',
+                    backgroundColor : '#f4f0e7',
+                    font: 'Varela Round',
+                    treads : {
+                        amount : 15,
+                        width : 1700, // in millimeters
+                        height : 50, // in millimeters
+                        fillColor : '#e0d9c9', //optional
+                        strokeColor : '#5e5a56', //optional
+                        textColor : '#641616' //optional
+                    },
+                    posts : {
+                        topLeft : true, //optional: default false
+                        topRight : false, //optional: default false
+                        bottomLeft : false, //optional: default false
+                        bottomRight : false, //optional: default false
+                        fillColor : '#caba7e', //optional
+                        strokeColor : '#5e5a56', //optional
+                        textColor : '#837038' //optional
+                    },
+                    ballustrades : {
+                        left : false, //optional: default false
+                        right : false, //optional: default false
+                        primaryFillColor : '#caba7e', //optional
+                        secondaryFillColor : '#b39f79', //optional
+                        strokeColor : '#5e5a56', //optional
+                    },
+                    featureTread : {
+                        left: 0, //0: none 1: curtail 2: bullnose 3: double going curtail plus single curtail 4: double going curtail plus bullnose
+                        right: 0, //0: none 1: curtail 2: bullnose 3: double going curtail plus single curtail 4: double going curtail plus bullnose
+                    },
+                    minHeight : 50,  // in millimeters
+                    maxHeight : 300,  // in millimeters
+                    minWidth : 1700, // in millimeters
+                    maxWidth : 2200  // in millimeters
+                }
+                quarterturnStairsConfig = {
+                    type: 'quarterturn',
+                    direction: 'left',
+                    backgroundColor : '#f4f0e7',
+                    font: 'Varela Round',
+                    treadHeight: 150, // in millimeters
+                    flight1Treads : {
+                        amount : 10,
+                        width : 900, // in millimeters
+                        fillColor : '#e0d9c9', //optional
+                        strokeColor : '#5e5a56', //optional
+                        textColor : '#641616' //optional
+                    },
+                    turnTreadsAmount : 2,
+                    flight2Treads : {
+                        maxAmount : 2,
+                        amount : 1,
+                        width : 900, // in millimeters
+                        fillColor : '#e0d9c9', //optional
+                        strokeColor : '#5e5a56', //optional
+                        textColor : '#641616' //optional
+                    },
+                    posts : {
+                        turnTopLeft : true, //optional: default false
+                        turnTopRight : true, //optional: default false
+                        turnBottom : true, // for outside post. inside bottom post is not optional
+                        flight1BottomLeft : true, //optional: default false
+                        flight1BottomRight : true, //optional: default false
+                        flight2Top : true, //optional: default false
+                        flight2Bottom : true, //optional: default false
+                        fillColor : '#caba7e', //optional
+                        strokeColor : '#5e5a56', //optional
+                        textColor : '#837038' //optional
+                    },
+                    ballustrades : {
+                        flight1Outside: true, //optional: default false
+                        flight1Inside: true, //optional: default false
+                        flight2Outside: true, //optional: default false
+                        flight2Inside: true, //optional: default false
+                        turnTop: true, //optional: default false
+                        turnSide: true, //optional: default false
+                        primaryFillColor : '#caba7e', //optional
+                        secondaryFillColor : '#b39f79', //optional
+                        strokeColor : '#5e5a56', //optional
+                    },
+                    featureTread : {
+                        left : 0, //0: none 1: curtail 2: bullnose 3: double going curtail plus single curtail 4: double going curtail plus bullnose
+                        right : 3, //0: none 1: curtail 2: bullnose 3: double going curtail plus single curtail 4: double going curtail plus bullnose
+                    },
+                    minHeight : 50,  // in millimeters
+                    maxHeight : 300,  // in millimeters
+                    minWidth : 800, // in millimeters
+                    maxWidth : 1200  // in millimeters
+                }
+                halfturnStairsConfig = {
+                    type: 'halfturn',
+                    direction: 'left',
+                    backgroundColor : '#f4f0e7',
+                    font: 'Varela Round',
+                    treadHeight: 150, // in millimeters
+                    flight1Treads : {
+                        amount : 4,
+                        width : 2200, // in millimeters
+                        fillColor : '#e0d9c9', //optional
+                        strokeColor : '#5e5a56', //optional
+                        textColor : '#641616' //optional
+                    },
+                    turn1TreadsAmount : 3,
+                    flight2Treads : {
+                        maxAmount : 4,
+                        amount : 2,
+                        width : 2200, // in millimeters
+                        fillColor : '#e0d9c9', //optional
+                        strokeColor : '#5e5a56', //optional
+                        textColor : '#641616' //optional
+                    },
+                    turn2TreadsAmount : 2,
+                    flight3Treads : {
+                        amount : 3,
+                        width : 2200, // in millimeters
+                        fillColor : '#e0d9c9', //optional
+                        strokeColor : '#5e5a56', //optional
+                        textColor : '#641616' //optional
+                    },
+                    posts : {
+                        flight1BottomLeft : true, //optional: default false
+                        flight1BottomRight : true, //optional: default false
+                        turn1TopLeft : true, //optional: default false
+                        turn1TopRight : true, //optional: default false
+                        turn1Bottom : true, // for outside post. inside bottom post is not optional
+                        turn2TopLeft : true, //optional: default false
+                        turn2TopRight : true, //optional: default false
+                        turn2Bottom : true, // for outside post. inside bottom post is not optional
+                        flight3Left : true, //optional: default false
+                        flight3Right : true, //optional: default false
+                        fillColor : '#caba7e', //optional
+                        strokeColor : '#5e5a56', //optional
+                        textColor : '#837038' //optional
+                    },
+                    ballustrades : {
+                        flight1Outside: true, //optional: default false
+                        flight1Inside: true, //optional: default false
+                        flight2Outside: true, //optional: default false
+                        flight2Inside: true, //optional: default false
+                        flight3Outside: true, //optional: default false
+                        flight3Inside: true, //optional: default false
+                        turn1Top: true, //optional: default false
+                        turn1Side: true, //optional: default false
+                        turn2Top: true, //optional: default false
+                        turn2Side: true, //optional: default false
+                        primaryFillColor : '#caba7e', //optional
+                        secondaryFillColor : '#b39f79', //optional
+                        strokeColor : '#5e5a56', //optional
+                    },
+                    featureTread : {
+                        left : 0, //0: none 1: curtail 2: bullnose 3: double going curtail plus single curtail 4: double going curtail plus bullnose
+                        right : 0, //0: none 1: curtail 2: bullnose 3: double going curtail plus single curtail 4: double going curtail plus bullnose
+                    },
+                    minHeight : 50,  // in millimeters
+                    maxHeight : 300,  // in millimeters
+                    minWidth : 1700, // in millimeters
+                    maxWidth : 2200  // in millimeters
+                }
+                doubleturnStairsConfig = {
+                    type: 'doubleturn',
+                    backgroundColor : '#f4f0e7',
+                    font: 'Varela Round',
+                    treadHeight: 300, // in millimeters
+                    flight1Treads : {
+                        amount : 10,
+                        width : 1700, // in millimeters
+                        fillColor : '#e0d9c9', //optional
+                        strokeColor : '#5e5a56', //optional
+                        textColor : '#641616' //optional
+                    },
+                    flight2Treads : {
+                        left : {
+                            maxAmount : 4,
+                            amount : 4
+                        },
+                        right : {
+                            maxAmount : 4,
+                            amount : 4
+                        },
+                        width : 1700, // in millimeters
+                        fillColor : '#e0d9c9', //optional
+                        strokeColor : '#5e5a56', //optional
+                        textColor : '#641616' //optional
+                    },
+                    posts : {
+                        flight1BottomLeft : true, //optional: default false
+                        flight1BottomRight : true, //optional: default false
+                        turnTopLeft : true, //optional: default false
+                        turnTopRight : true, //optional: default false
+                        //turnBottom are both required?
+                        leftFlightTop : true,
+                        leftFlightBottom : true,
+                        rightFlightTop : true,
+                        rightFlightBottom : true,
+                        fillColor : '#caba7e', //optional
+                        strokeColor : '#5e5a56', //optional
+                        textColor : '#837038' //optional
+                    },
+                    ballustrades : {
+                        flight1Left: true, //optional: default false
+                        flight1Right: true, //optional: default false
+                        leftFlightTop: true, //optional: default false
+                        leftFlightBottom: true, //optional: default false
+                        rightFlightTop: true, //optional: default false
+                        rightFlightBottom: true, //optional: default false
+                        turnTop: true, //optional: default false
+                        primaryFillColor : '#caba7e', //optional
+                        secondaryFillColor : '#b39f79', //optional
+                        strokeColor : '#5e5a56', //optional
+                    },
+                    featureTread : {
+                        left : 3, //0: none 1: curtail 2: bullnose 3: double going curtail plus single curtail 4: double going curtail plus bullnose
+                        right : 0, //0: none 1: curtail 2: bullnose 3: double going curtail plus single curtail 4: double going curtail plus bullnose
+                    },
+                    minHeight : 50,  // in millimeters
+                    maxHeight : 300,  // in millimeters
+                    minWidth : 1700, // in millimeters
+                    maxWidth : 2200  // in millimeters
+                }
+                canvas = document.getElementById("canvas");
+                
+                Stairs.init(canvas, halfturnStairsConfig);
+                //Stairs.init(canvas, quarterturnStairsConfig);
+                //Stairs.init(canvas, doubleturnStairsConfig);
+            }
+
+            document.onmousemove = function(event){
+                document.getElementById('mouseX').innerHTML = event.screenX;
+                document.getElementById('mouseY').innerHTML = event.screenY;                
+            }
+        </script>
+        <div id="loadText">Fake</div>
+    </body>
+</html>

@@ -1,0 +1,20 @@
+body {
+    background-color: white;
+    margin: 0 auto;
+}
+
+#loadText{
+	width: 0px;
+	height: 0px;
+	overflow: hidden;
+	font-family: 'Varela Round';
+}
+
+.title{
+	vertical-align: top;
+	font-weight: bold;
+}
+
+.value{
+	vertical-align: top;
+}
